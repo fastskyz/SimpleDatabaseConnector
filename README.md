@@ -14,6 +14,8 @@ I recommend using this as a super class for a custom class, as shown in the quic
 
 __CODE:__
 ```python
+from SimpleSQLConnector.connector import SQLConnector
+
 class CustomSQLConnector(SQLConnector):
     def __init__(self,
             password,
