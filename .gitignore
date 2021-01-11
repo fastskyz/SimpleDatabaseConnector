@@ -1,0 +1,6 @@
+.vscode
+
+*.sql
+
+venv/
+__pycache__/
