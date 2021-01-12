@@ -24,7 +24,7 @@ __These databases should work, but are not (fully) tested__
 
 ### SQLConnector
 ```python
-from SimpleSQLConnector.Connectors import SQLConnector
+from SimpleDatabaseConnector.Connectors import SQLConnector
 
 class CustomSQLConnector(SQLConnector):
     def __init__(self,
@@ -48,7 +48,7 @@ print(result)
 
 ### DatabaseCache
 ```python
-from DBCache import DatabaseCache
+from SimpleDatabaseConnector.Caches import DatabaseCache
 import CustomConnector # import your own custom connector
 
 # Create new cache and db instances
