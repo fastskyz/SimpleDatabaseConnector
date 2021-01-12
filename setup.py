@@ -1,19 +1,11 @@
 import setuptools
 
-'''
-install_reqs = parse_requirements('requirements.txt')
-reqs = [str(ir.req) for ir in install_reqs]
-
-with open("requirements.txt", "r", encoding="utf-16") as fh:
-    requirements = [str(line).rstrip() for line in fh.readlines()]
-'''
-
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="simple-sql-connector",
-    version="0.0.3",
+    name="SimpleSQLConnector",
+    version="0.0.1",
     author="fastskyz",
     author_email="seppedelanghe17@gmail.com",
     description="A simple SQL Connector",

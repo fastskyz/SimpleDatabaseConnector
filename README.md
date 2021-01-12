@@ -1,20 +1,28 @@
-# Simple Python SQL Connector
+# Simple Python Database Connectors
+__Basic Python 3 class for connecting to Databases__
 
-__Basic Python 3 class for connecting to a SQL Database__
-
-This is writen to be used in a project for my education that uses AzureSQL.
 I recommend using this as a super class for a custom class, as shown in the quickstart, but can be used without.
+
+## Main goal
+This is something I built for personal (local) projects. I'll expand this repository when I need a new type of database connection for a project. By doing it this way, I have a nice all-in one package for all my different database connections. The goal is to keep the code and package as small and lightweigth as possible.
+
+## Supported Databases
+__These databases are tested and working with the current build.__
+
+- AzureSQL
+- SQLServer Express 
+
+__These databases should work, but are not (fully) tested__
+- MySQL
+- SQLite
 
 ### Defaults
 - __port:__ _1433_
 - __driver:__ _ODBC Driver 17 for SQL Server_
 
-### Quickstart
-`pip install -r requirements.txt`
-
-__CODE:__
+## Example Code
 ```python
-from SimpleSQLConnector.connector import SQLConnector
+from SimpleSQLConnector.Connectors import SQLConnector
 
 class CustomSQLConnector(SQLConnector):
     def __init__(self,
@@ -33,3 +41,9 @@ result = db.get_item_by_id("User", id)
 
 print(result)
 ```
+
+
+## Wanted features
+- [x] SQL Connector
+- [ ] Database Cache
+- [ ] MongoDB Connector
