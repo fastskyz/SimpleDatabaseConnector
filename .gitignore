@@ -1,5 +1,5 @@
-.vscode
-
+.vscode/
 __pycache__/
 build/
 dist/
+SimpleSQLConnector.egg-info/
