@@ -21,6 +21,8 @@ __These databases should work, but are not (fully) tested__
 - __driver:__ _ODBC Driver 17 for SQL Server_
 
 ## Example Code
+
+### SQLConnector
 ```python
 from SimpleSQLConnector.Connectors import SQLConnector
 
@@ -33,6 +35,8 @@ class CustomSQLConnector(SQLConnector):
         ):
         super().__init__(username, password, server, database)
 
+    # Write custom functions
+
 db = CustomSQLConnector(password="my-db-password")
 
 # Get a user by his/her id
@@ -42,8 +46,34 @@ result = db.get_item_by_id("User", id)
 print(result)
 ```
 
+### DatabaseCache
+```python
+from DBCache import DatabaseCache
+import CustomConnector # import your own custom connector
+
+# Create new cache and db instances
+cache = DatabaseCache()
+db = CustomConnector()
+
+# an example query
+query = "SELECT * FROM Building WHERE FirstName = ? AND LastName = ?;"
+args = ["John", "Doe"]
+
+# example function, this would probably be integrated in your CustomConnector
+def get_user():
+    result = cache.check(query, args=args)
+    if result == None:
+        result = db.get_all(query, args)
+        cache.add(query, data=result, args=args)
+
+    return result
+
+# the first time the database will be called, the second time the cache will be used
+user_sql = get_user()
+user_cache = get_user()
+```
 
 ## Wanted features
 - [x] SQL Connector
-- [ ] Database Cache
+- [x] Database Cache
 - [ ] MongoDB Connector
