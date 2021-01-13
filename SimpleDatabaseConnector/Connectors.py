@@ -34,20 +34,29 @@ class SQLConnector:
         return True
 
     # Base operations
-    def execute(self, query, args): # Execute without response
+    def execute(self, query, args=None): # Execute without response
         with pyodbc.connect('DRIVER={};SERVER={};PORT={};DATABASE={};UID={};PWD={}'.format(self.driver, self.server, self.port, self.database, self.user, self.password)) as connection:
             with connection.cursor() as cursor:
-                cursor.execute(query, args)
+                if args:
+                    cursor.execute(query, args)
+                else:
+                    cursor.execute(query)
                 
-    def get_one(self, query, args): # Execute with one item as a response
+    def get_one(self, query, args=None): # Execute with one item as a response
         with pyodbc.connect('DRIVER={};SERVER={};PORT={};DATABASE={};UID={};PWD={}'.format(self.driver, self.server, self.port, self.database, self.user, self.password)) as connection:
             with connection.cursor() as cursor:
-                return cursor.execute(query, args).fetchone()
+                if args:
+                    return cursor.execute(query, args).fetchone()
+                else:
+                    return cursor.execute(query).fetchone()
 
-    def get_all(self, query, args): # Execute with all items as a response
+    def get_all(self, query, args=None): # Execute with all items as a response
         with pyodbc.connect('DRIVER={};SERVER={};PORT={};DATABASE={};UID={};PWD={}'.format(self.driver, self.server, self.port, self.database, self.user, self.password)) as connection:
             with connection.cursor() as cursor:
-                return cursor.execute(query, args).fetchall()
+                if args:
+                    return cursor.execute(query, args).fetchall()
+                else:
+                    return cursor.execute(query).fetchall()
 
     # Helpers
     def new_uuid(self):
@@ -101,13 +110,17 @@ class SQLConnector:
         query = "SELECT * FROM {} WHERE {} = ?;".format(tableName, seperator.join(columns))
         return self.get_one(query, values)
 
-    def get_items(self, tableName, columns, values):
+    def get_all_items(self, tableName):
+        query = "SELECT * FROM {};".format(tableName)
+        return self.get_all(query)
+
+    def get_items_where(self, tableName, columns, values):
         if len(columns) != len(values):
             raise Exception("Arrays 'columns' and 'values' do not have the same length!")
 
         seperator = " = ?,"
         query = "SELECT * FROM {} WHERE {} = ?;".format(tableName, seperator.join(columns))
-        return self.execute(query, values)
+        return self.get_all(query, values)
 
     def get_item_by_id(self, tableName, id):
         query = "SELECT * FROM {} WHERE Id = ?;".format(tableName)
